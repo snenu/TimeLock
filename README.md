@@ -20,10 +20,6 @@
 ---
 
 
-live url - https://timelockh.vercel.app/
-
-live demo url - https://youtu.be/Y_Z60a_I6LQ
-
 ## 🌟 What is TimeLock Contacts?
 
 **TimeLock Contacts** is a revolutionary time capsule application that lets you send messages, files, and cryptocurrency to the future. Create emotional letters, store precious memories, schedule crypto transfers, or set up a digital legacy — all secured on-chain and encrypted on IPFS.
