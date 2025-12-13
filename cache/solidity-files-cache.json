@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\parth\\orchids-projects\\orchids-timelock-app\\contracts\\TimeLockContacts.sol": {
+      "lastModificationDate": 1765567015974,
+      "contentHash": "8bc91d433179363ca252c54cfa78cd83",
+      "sourceName": "contracts/TimeLockContacts.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "TimeLockContacts"
+      ]
+    }
+  }
+}
