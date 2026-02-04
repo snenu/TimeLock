@@ -7,13 +7,7 @@ const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || '';
 export const config = createConfig({
   chains: [polygonAmoy],
   connectors: [
-    injected({
-      target: () => ({
-        id: 'injected',
-        name: 'MetaMask',
-        provider: typeof window !== 'undefined' ? window.ethereum : undefined,
-      }),
-    }),
+    injected(),
     walletConnect({ 
       projectId,
       metadata: {

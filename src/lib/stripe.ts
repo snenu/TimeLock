@@ -1,8 +1,7 @@
 import Stripe from 'stripe';
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-05-28.basil',
-});
+const key = process.env.STRIPE_SECRET_KEY;
+export const stripe = key ? new Stripe(key, { apiVersion: '2025-11-17.clover' }) : null;
 
 export const STRIPE_PRO_PRICE_ID = 'price_1SdbLE6gBj1WFUnuqnVgexzH';
 

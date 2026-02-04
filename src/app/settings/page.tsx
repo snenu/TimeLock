@@ -1,6 +1,7 @@
 'use client';
 
 import { useAccount, useDisconnect, useBalance } from 'wagmi';
+import { formatUnits } from 'viem';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -76,7 +77,7 @@ export default function SettingsPage() {
                   <div>
                     <p className="text-sm text-gray-500">Balance</p>
                     <p className="font-semibold text-gray-900">
-                      {balance ? `${parseFloat(balance.formatted).toFixed(4)} ${balance.symbol}` : '0 POL'}
+                      {balance ? `${parseFloat(formatUnits(balance.value, balance.decimals)).toFixed(4)} ${balance.symbol}` : '0 POL'}
                     </p>
                   </div>
                 </div>

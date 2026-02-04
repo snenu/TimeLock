@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 
 export async function GET(request: NextRequest) {
+  if (!stripe) {
+    return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 });
+  }
   try {
     const { searchParams } = new URL(request.url);
     const sessionId = searchParams.get('session_id');
@@ -28,11 +31,12 @@ export async function GET(request: NextRequest) {
       ? await stripe.subscriptions.retrieve(session.subscription)
       : session.subscription;
 
+    const sub = subscription as { current_period_end?: number };
     return NextResponse.json({
       status: subscription.status,
       customerId: subscription.customer,
       subscriptionId: subscription.id,
-      currentPeriodEnd: subscription.current_period_end,
+      currentPeriodEnd: sub.current_period_end,
       walletAddress: session.metadata?.walletAddress,
     });
   } catch (error) {

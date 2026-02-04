@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 
 export async function POST() {
+  if (!stripe) {
+    return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 });
+  }
   try {
     const product = await stripe.products.create({
       name: 'TimeLock Pro',

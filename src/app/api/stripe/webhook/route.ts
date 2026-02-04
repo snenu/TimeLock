@@ -6,6 +6,9 @@ export async function POST(request: NextRequest) {
   const body = await request.text();
   const signature = request.headers.get('stripe-signature');
 
+  if (!stripe) {
+    return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 });
+  }
   if (!signature) {
     return NextResponse.json(
       { error: 'No signature found' },
@@ -29,7 +32,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const subscription = event.data.object as Stripe.Subscription;
+  const subscription = event.data.object as Stripe.Subscription & { current_period_end?: number; metadata?: { walletAddress?: string } };
   const walletAddress = subscription.metadata?.walletAddress;
 
   switch (event.type) {

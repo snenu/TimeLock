@@ -40,10 +40,10 @@ export default function Error({
             variant="outline"
             className="border-sky-200 inline-flex items-center gap-2"
           >
-            <a href="/">
+            <Link href="/">
               <Home className="w-4 h-4" />
               Go home
-            </a>
+            </Link>
           </Button>
         </div>
       </Card>
