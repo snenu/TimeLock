@@ -65,7 +65,7 @@ const plans = [
   },
 ];
 
-export function PricingPage() {
+export default function PricingPage() {
   const { isConnected } = useAccount();
 
   return (
@@ -228,5 +228,3 @@ export function PricingPage() {
     </div>
   );
 }
-
-export default PricingPage;

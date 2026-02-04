@@ -58,7 +58,7 @@ const stats = [
   { value: 99, suffix: '%', label: 'Uptime', icon: <CheckCircle2 className="w-6 h-6 text-white" /> },
 ];
 
-export function LandingPage() {
+export default function LandingPage() {
   const { isConnected } = useAccount();
   const [mounted, setMounted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -502,5 +502,3 @@ export function LandingPage() {
     </div>
   );
 }
-
-export default LandingPage;
