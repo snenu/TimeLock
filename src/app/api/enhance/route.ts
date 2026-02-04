@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const MODEL_NAME = process.env.MODEL_NAME || 'gemini-2.0-flash-exp';
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,7 +34,7 @@ The original message is:
 Please enhance this message to make it more emotionally impactful and meaningful while preserving the original sentiment and intent. Keep it personal and authentic. Do not make it too long - keep it concise but powerful. Return only the enhanced message, no explanations or quotes around it.`;
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: {

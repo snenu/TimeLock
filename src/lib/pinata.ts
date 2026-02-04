@@ -1,43 +1,37 @@
 import axios from 'axios';
 
-const PINATA_API_KEY = process.env.NEXT_PUBLIC_PINATA_API_KEY;
-const PINATA_SECRET_KEY = process.env.NEXT_PUBLIC_PINATA_SECRET_KEY;
-const PINATA_JWT = process.env.NEXT_PUBLIC_PINATA_JWT;
-
+/**
+ * Upload data to IPFS via the server-side Pinata API (keeps keys server-only).
+ * For JSON: sends to POST /api/pinata/upload with { content, name }.
+ * For File: sends FormData with 'file' and 'name'.
+ */
 export async function uploadToPinata(data: string | File, name: string): Promise<string> {
   if (typeof data === 'string') {
-    const response = await axios.post(
-      'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-      {
-        pinataContent: { content: data, timestamp: Date.now() },
-        pinataMetadata: { name }
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'pinata_api_key': PINATA_API_KEY,
-          'pinata_secret_api_key': PINATA_SECRET_KEY,
-        }
-      }
-    );
-    return response.data.IpfsHash;
-  } else {
-    const formData = new FormData();
-    formData.append('file', data);
-    formData.append('pinataMetadata', JSON.stringify({ name }));
-
-    const response = await axios.post(
-      'https://api.pinata.cloud/pinning/pinFileToIPFS',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${PINATA_JWT}`,
-        }
-      }
-    );
-    return response.data.IpfsHash;
+    const response = await fetch('/api/pinata/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: data, name }),
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({ error: response.statusText }));
+      throw new Error((err as { error?: string }).error || 'Upload failed');
+    }
+    const result = await response.json();
+    return result.ipfsHash;
   }
+  const formData = new FormData();
+  formData.append('file', data);
+  formData.append('name', name);
+  const response = await fetch('/api/pinata/upload', {
+    method: 'POST',
+    body: formData,
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: response.statusText }));
+    throw new Error((err as { error?: string }).error || 'Upload failed');
+  }
+  const result = await response.json();
+  return result.ipfsHash;
 }
 
 export async function fetchFromPinata(hash: string): Promise<string> {

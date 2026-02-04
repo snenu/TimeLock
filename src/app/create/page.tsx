@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { format, addDays, addMonths, addYears } from 'date-fns';
 import { cn } from '@/lib/utils';
+import QRCode from 'react-qr-code';
 
 const lockTypes = [
   { value: 'message', label: 'Message', icon: Mail, description: 'Send a text message' },
@@ -245,9 +246,17 @@ export default function CreatePage() {
                   <span className="font-semibold">Save Your Encryption Key!</span>
                 </div>
                 <p className="text-sm text-amber-600 mb-3">You need this key to decrypt your content</p>
-                <code className="block bg-white p-3 rounded-lg text-xs break-all text-gray-800 border border-amber-200">
-                  {encryptionKey}
-                </code>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <code className="block flex-1 bg-white p-3 rounded-lg text-xs break-all text-gray-800 border border-amber-200 w-full">
+                    {encryptionKey}
+                  </code>
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="text-xs text-amber-700 font-medium">Scan to save</span>
+                    <div className="bg-white p-2 rounded-lg border border-amber-200">
+                      <QRCode value={encryptionKey} size={128} level="M" />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="flex gap-4">

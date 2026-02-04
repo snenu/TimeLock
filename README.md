@@ -111,27 +111,29 @@ npm install
 
 ### 3. Environment Variables
 
-Create a `.env.local` file in the root directory:
+Copy `.env.example` to `.env.local` and fill in your values:
 
-```env
-# Blockchain
-PRIVATE_KEY=your_wallet_private_key
-POLYGON_AMOY_RPC=https://polygon-amoy.g.alchemy.com/v2/YOUR_KEY
-NEXT_PUBLIC_CHAIN_ID=80002
-NEXT_PUBLIC_RPC_URL=https://polygon-amoy.g.alchemy.com/v2/YOUR_KEY
-NEXT_PUBLIC_CONTRACT_ADDRESS=your_deployed_contract_address
-
-# WalletConnect
-NEXT_PUBLIC_WC_PROJECT_ID=your_walletconnect_project_id
-
-# Pinata IPFS
-NEXT_PUBLIC_PINATA_API_KEY=your_pinata_api_key
-NEXT_PUBLIC_PINATA_SECRET_KEY=your_pinata_secret_key
-NEXT_PUBLIC_PINATA_JWT=your_pinata_jwt_token
-
-# Gemini AI
-GEMINI_API_KEY=your_gemini_api_key
+```bash
+cp .env.example .env.local
 ```
+
+Required variables:
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_CONTRACT_ADDRESS` | Deployed TimeLock contract address |
+| `NEXT_PUBLIC_CHAIN_ID` | Chain ID (e.g. `80002` for Polygon Amoy) |
+| `NEXT_PUBLIC_RPC_URL` | RPC URL for the chain |
+| `NEXT_PUBLIC_WC_PROJECT_ID` | [WalletConnect](https://cloud.walletconnect.com/) project ID |
+| `PINATA_API_KEY` | [Pinata](https://pinata.cloud/) API key (server-only; uploads go via `/api/pinata/upload`) |
+| `PINATA_SECRET_KEY` | Pinata secret key (server-only) |
+| `PINATA_JWT` | Pinata JWT (server-only; required for file uploads) |
+| `GEMINI_API_KEY` | [Google AI](https://ai.google.dev/) API key for message enhancement |
+| `MODEL_NAME` | (Optional) Gemini model, e.g. `gemini-2.0-flash-exp` |
+| `STRIPE_SECRET_KEY` | [Stripe](https://dashboard.stripe.com/apikeys) secret key (for Pro checkout) |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key (if using client-side Stripe) |
+| `PRIVATE_KEY` | (Optional) Wallet private key for contract deployment only |
 
 ### 4. Run Development Server
 
@@ -165,6 +167,15 @@ npx hardhat run scripts/deploy.js --network amoy
 
 ---
 
+## 🚢 Production / Mainnet
+
+1. **Build**: Run `npm run build` and fix any TypeScript or ESLint errors.
+2. **Environment**: Set all production env vars (no `NEXT_PUBLIC_` for secrets). Use mainnet RPC and contract address when moving off testnet.
+3. **Checklist**: Contract address, RPC URL, WalletConnect project ID, Stripe live keys and webhook URL, Pinata and Gemini keys.
+4. **Deploy**: Use your preferred host (Vercel, etc.). Configure Stripe webhook to point to `https://your-domain.com/api/stripe/webhook`.
+
+---
+
 ## 🎨 App Pages
 
 | Page | Route | Description |
@@ -172,7 +183,11 @@ npx hardhat run scripts/deploy.js --network amoy
 | **Landing** | `/` | Hero section with features showcase |
 | **Dashboard** | `/dashboard` | View all sent and received TimeLocks |
 | **Create** | `/create` | 3-step wizard to create new TimeLock |
+| **Unlock** | `/unlock` | Enter TimeLock ID to view or unlock |
 | **Unlock** | `/unlock/[id]` | View and unlock TimeLock details |
+| **Pricing** | `/pricing` | Free and Pro plans |
+| **Checkout** | `/checkout` | Stripe checkout for Pro upgrade |
+| **Success** | `/checkout/success` | Post-checkout confirmation |
 | **Settings** | `/settings` | Wallet info and app preferences |
 
 ---
