@@ -101,7 +101,7 @@ export default function LandingPage() {
           >
             <span className="inline-flex items-center gap-2 px-6 py-3 bg-white/90 backdrop-blur-xl rounded-full text-[#4db8e8] text-sm font-bold border border-[#87ceeb]/40 shadow-lg shadow-[#87ceeb]/20">
               <Sparkles className="w-4 h-4" />
-              PRODUCTION READY • POLYGON BLOCKCHAIN
+              PRODUCTION READY • POLYGON MAINNET
             </span>
           </motion.div>
 
@@ -479,8 +479,8 @@ export default function LandingPage() {
             <div>
               <h4 className="font-bold mb-4 text-lg">Resources</h4>
               <ul className="space-y-3 text-gray-400">
-                <li><a href="https://faucet.polygon.technology/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Get Test POL</a></li>
-                <li><a href="https://amoy.polygonscan.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">PolygonScan</a></li>
+                <li><a href="https://www.coinbase.com/price/polygon-ecosystem-token" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Get POL</a></li>
+                <li><a href="https://polygonscan.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">PolygonScan</a></li>
                 <li><a href="https://docs.polygon.technology/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Polygon Docs</a></li>
                 <li><a href="https://metamask.io/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">MetaMask</a></li>
               </ul>

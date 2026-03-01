@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
-import { polygonAmoy } from '@/lib/wagmi-config';
+import { polygon } from '@/lib/wagmi-config';
 import { CONTRACT_ADDRESS } from '@/lib/contract';
 
 export default function SettingsPage() {
@@ -89,7 +89,7 @@ export default function SettingsPage() {
                       <span className="font-semibold text-gray-900">
                         {chain?.name || 'Unknown'}
                       </span>
-                      {chain?.id === polygonAmoy.id && (
+                      {chain?.id === polygon.id && (
                         <Badge variant="secondary" className="bg-green-100 text-green-700">
                           <CheckCircle className="w-3 h-3 mr-1" />
                           Connected
@@ -135,7 +135,7 @@ export default function SettingsPage() {
                   <div className="flex items-center gap-2">
                     <p className="font-mono text-xs text-gray-900 break-all">{CONTRACT_ADDRESS}</p>
                     <a
-                      href={`https://amoy.polygonscan.com/address/${CONTRACT_ADDRESS}`}
+                      href={`https://polygonscan.com/address/${CONTRACT_ADDRESS}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sky-600 hover:text-sky-700"
@@ -147,7 +147,7 @@ export default function SettingsPage() {
 
                 <div className="p-4 bg-sky-50 rounded-xl">
                   <p className="text-sm text-gray-500 mb-1">Network</p>
-                  <p className="font-semibold text-gray-900">Polygon Amoy Testnet (Chain ID: 80002)</p>
+                  <p className="font-semibold text-gray-900">Polygon Mainnet (Chain ID: 137)</p>
                 </div>
               </div>
             </Card>
@@ -171,16 +171,16 @@ export default function SettingsPage() {
 
               <div className="grid md:grid-cols-2 gap-4">
                 <a
-                  href="https://faucet.polygon.technology/"
+                  href="https://www.coinbase.com/price/polygon-ecosystem-token"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 bg-sky-50 rounded-xl hover:bg-sky-100 transition-colors"
                 >
-                  <p className="font-semibold text-gray-900">Polygon Faucet</p>
-                  <p className="text-sm text-gray-500">Get free POL tokens</p>
+                  <p className="font-semibold text-gray-900">Get POL</p>
+                  <p className="text-sm text-gray-500">Buy POL on exchanges</p>
                 </a>
                 <a
-                  href="https://amoy.polygonscan.com/"
+                  href="https://polygonscan.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 bg-sky-50 rounded-xl hover:bg-sky-100 transition-colors"
