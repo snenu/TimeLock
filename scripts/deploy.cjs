@@ -2,10 +2,19 @@ const hre = require("hardhat");
 const fs = require('fs');
 const path = require('path');
 
+function getExplorerUrl(networkName, address) {
+  if (networkName === 'polygonMainnet') {
+    return `https://polygonscan.com/address/${address}`;
+  }
+  return `https://amoy.polygonscan.com/address/${address}`;
+}
+
 async function main() {
-  // Ensure we're on Polygon Amoy network
   const network = await hre.ethers.provider.getNetwork();
-  console.log("Deploying TimeLockContacts to Polygon Amoy...\n");
+  const networkName = hre.network.name;
+  const isMainnet = networkName === 'polygonMainnet';
+
+  console.log(`Deploying TimeLockContacts to ${isMainnet ? 'Polygon Mainnet' : 'Polygon Amoy'}...\n`);
   console.log("Network:", network.name, "Chain ID:", network.chainId.toString());
 
   const [deployer] = await hre.ethers.getSigners();
@@ -21,14 +30,13 @@ async function main() {
   const address = await contract.getAddress();
 
   console.log("✅ TimeLockContacts deployed to:", address);
-  console.log("\n📝 Update your .env.local file:");
+  console.log("\n📝 Update your .env file:");
   console.log(`NEXT_PUBLIC_CONTRACT_ADDRESS=${address}`);
   
-  // Save deployment info
   const deploymentInfo = {
     address: address,
     deployer: deployer.address,
-    network: hre.network.name,
+    network: networkName,
     chainId: hre.network.config.chainId,
     timestamp: new Date().toISOString(),
   };
@@ -39,8 +47,8 @@ async function main() {
   );
   
   console.log("\n✅ Deployment info saved to deployment-info.json");
-  console.log("\n🔗 View on Amoy Explorer:");
-  console.log(`https://amoy.polygonscan.com/address/${address}`);
+  console.log("\n🔗 View on Explorer:");
+  console.log(getExplorerUrl(networkName, address));
 }
 
 main()

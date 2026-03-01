@@ -1,4 +1,5 @@
 /** @type import('hardhat/config').HardhatUserConfig */
+require('dotenv').config({ path: '.env' });
 require('dotenv').config({ path: '.env.local' });
 require("@nomicfoundation/hardhat-toolbox");
 
@@ -13,6 +14,13 @@ module.exports = {
     }
   },
   networks: {
+    polygonMainnet: {
+      url: process.env.POLYGON_MAINNET_RPC || "https://polygon.drpc.org",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 137,
+      timeout: 60000,
+      gasPrice: 'auto'
+    },
     polygonAmoy: {
       url: process.env.POLYGON_AMOY_RPC || "https://rpc-amoy.polygon.technology",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],

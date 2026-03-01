@@ -5,7 +5,7 @@ import { useAccount, useReadContract, useWriteContract, useWaitForTransactionRec
 import { CONTRACT_ADDRESS, CONTRACT_ABI, TimeLockData } from '@/lib/contract';
 import { fetchFromPinata, getIPFSUrl } from '@/lib/pinata';
 import { decrypt } from '@/lib/encryption';
-import { polygonAmoy } from 'wagmi/chains';
+import { polygon } from '@/lib/wagmi-config';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -59,7 +59,7 @@ export default function UnlockPage({ params }: { params: Promise<{ id: string }>
       abi: CONTRACT_ABI,
       functionName: 'unlock',
       args: [lockId],
-      chainId: polygonAmoy.id,
+      chainId: polygon.id,
     });
   };
 
@@ -71,7 +71,7 @@ export default function UnlockPage({ params }: { params: Promise<{ id: string }>
       abi: CONTRACT_ABI,
       functionName: 'claimCrypto',
       args: [lockId],
-      chainId: polygonAmoy.id,
+      chainId: polygon.id,
     });
   };
 

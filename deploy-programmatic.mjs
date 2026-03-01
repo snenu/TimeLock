@@ -9,43 +9,48 @@ import { resolve } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables
+// Load environment variables (try .env first, then .env.local)
+dotenvConfig({ path: resolve(process.cwd(), '.env') });
 dotenvConfig({ path: resolve(process.cwd(), '.env.local') });
 
-async function main() {
-  console.log("Deploying TimeLockContacts to Polygon Amoy...\n");
+const USE_MAINNET = process.argv.includes('--mainnet') || process.env.DEPLOY_MAINNET === 'true';
 
-  // Set the network
-  hre.config.networks.polygonAmoy = {
-    url: process.env.POLYGON_AMOY_RPC || "https://rpc-amoy.polygon.technology",
+async function main() {
+  const isMainnet = USE_MAINNET;
+  const rpcUrl = isMainnet
+    ? (process.env.POLYGON_MAINNET_RPC || "https://polygon.drpc.org")
+    : (process.env.POLYGON_AMOY_RPC || "https://rpc-amoy.polygon.technology");
+  const chainId = isMainnet ? 137 : 80002;
+  const networkName = isMainnet ? "polygonMainnet" : "polygonAmoy";
+  const explorerBase = isMainnet ? "https://polygonscan.com" : "https://amoy.polygonscan.com";
+
+  console.log(`Deploying TimeLockContacts to ${isMainnet ? 'Polygon Mainnet' : 'Polygon Amoy'}...\n`);
+
+  hre.config.networks[networkName] = {
+    url: rpcUrl,
     accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-    chainId: 80002,
+    chainId,
     timeout: 60000,
     gasPrice: 'auto'
   };
 
-  // Compile contracts
   console.log("📦 Compiling contracts...");
   await hre.run('compile');
 
-  // Get signers
-  const provider = new hre.ethers.JsonRpcProvider(
-    process.env.POLYGON_AMOY_RPC || "https://rpc-amoy.polygon.technology"
-  );
+  const provider = new hre.ethers.JsonRpcProvider(rpcUrl);
   const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY, provider);
   
   console.log("Deploying with account:", wallet.address);
   
   const balance = await provider.getBalance(wallet.address);
-  console.log("Account balance:", hre.ethers.formatEther(balance), "MATIC\n");
+  console.log("Account balance:", hre.ethers.formatEther(balance), "POL\n");
 
   if (balance === 0n) {
-    console.error("❌ Error: Insufficient balance. Please get testnet MATIC from:");
-    console.log("https://faucet.polygon.technology/");
+    console.error("❌ Error: Insufficient balance. Please get POL from an exchange or faucet.");
+    if (!isMainnet) console.log("Testnet: https://faucet.polygon.technology/");
     process.exit(1);
   }
 
-  // Deploy contract
   console.log("🚀 Deploying contract...");
   const TimeLockContacts = await hre.ethers.getContractFactory("TimeLockContacts", wallet);
   const contract = await TimeLockContacts.deploy();
@@ -55,15 +60,14 @@ async function main() {
   const address = await contract.getAddress();
 
   console.log("\n✅ TimeLockContacts deployed to:", address);
-  console.log("\n📝 Update your .env.local file:");
+  console.log("\n📝 Update your .env file:");
   console.log(`NEXT_PUBLIC_CONTRACT_ADDRESS=${address}`);
   
-  // Save deployment info
   const deploymentInfo = {
     address: address,
     deployer: wallet.address,
-    network: "polygonAmoy",
-    chainId: 80002,
+    network: networkName,
+    chainId,
     timestamp: new Date().toISOString(),
   };
   
@@ -73,8 +77,8 @@ async function main() {
   );
   
   console.log("\n✅ Deployment info saved to deployment-info.json");
-  console.log("\n🔗 View on Amoy Explorer:");
-  console.log(`https://amoy.polygonscan.com/address/${address}`);
+  console.log("\n🔗 View on Explorer:");
+  console.log(`${explorerBase}/address/${address}`);
 }
 
 main()

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAccount, useSwitchChain } from 'wagmi';
-import { polygonAmoy } from '@/lib/wagmi-config';
+import { polygon } from '@/lib/wagmi-config';
 import { Button } from '@/components/ui/button';
 import { AlertCircle } from 'lucide-react';
 
@@ -9,7 +9,7 @@ export function NetworkSwitcher() {
   const { chain } = useAccount();
   const { switchChain } = useSwitchChain();
 
-  if (!chain || chain.id === polygonAmoy.id) {
+  if (!chain || chain.id === polygon.id) {
     return null;
   }
 
@@ -21,14 +21,14 @@ export function NetworkSwitcher() {
           <div className="flex-1">
             <h4 className="font-semibold text-amber-900 mb-1">Wrong Network</h4>
             <p className="text-sm text-amber-700 mb-3">
-              Please switch to Polygon Amoy Testnet to use this app.
+              Please switch to Polygon Mainnet to use this app.
             </p>
             <Button
-              onClick={() => switchChain({ chainId: polygonAmoy.id })}
+              onClick={() => switchChain({ chainId: polygon.id })}
               className="bg-amber-600 hover:bg-amber-700 text-white"
               size="sm"
             >
-              Switch to Polygon Amoy
+              Switch to Polygon Mainnet
             </Button>
           </div>
         </div>

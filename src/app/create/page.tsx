@@ -5,7 +5,7 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagm
 import { parseEther } from 'viem';
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from '@/lib/contract';
 import { uploadToPinata } from '@/lib/pinata';
-import { polygonAmoy } from 'wagmi/chains';
+import { polygon } from '@/lib/wagmi-config';
 import { encrypt, generateEncryptionKey, hashKey } from '@/lib/encryption';
 import { canCreateTimeLock, getRemainingTimeLocks, incrementTimeLockCount, getSubscription } from '@/lib/subscription';
 import { Card } from '@/components/ui/card';
@@ -201,7 +201,7 @@ export default function CreatePage() {
           metadata,
         ],
         value: lockType === 'crypto' && cryptoAmount ? parseEther(cryptoAmount) : BigInt(0),
-        chainId: polygonAmoy.id,
+        chainId: polygon.id,
       });
 
       toast.success('Transaction submitted! Waiting for confirmation...');
