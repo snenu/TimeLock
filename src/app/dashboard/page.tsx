@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { 
   Clock, Plus, Lock, Unlock, Send, Inbox, 
-  Calendar, Coins, FileText, Loader2 
+  Calendar, Coins, FileText, Loader2, ExternalLink 
 } from 'lucide-react';
 import { formatDistanceToNow, format } from 'date-fns';
 import { formatEther } from 'viem';
@@ -88,11 +88,22 @@ function TimeLockCard({ lockId, isSent }: { lockId: bigint; isSent: boolean }) {
             {(isSent ? lock.recipient : lock.owner).slice(0, 6)}...
             {(isSent ? lock.recipient : lock.owner).slice(-4)}
           </span>
-          <Link href={`/unlock/${lock.id.toString()}`}>
-            <Button size="sm" variant="outline" className="border-sky-200 hover:bg-sky-50">
-              View Details
-            </Button>
-          </Link>
+          <div className="flex items-center gap-2">
+            <a
+              href={`https://polygonscan.com/address/${CONTRACT_ADDRESS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sky-500 hover:text-sky-600"
+              title="View on Explorer"
+            >
+              <ExternalLink className="w-4 h-4" />
+            </a>
+            <Link href={`/unlock/${lock.id.toString()}`}>
+              <Button size="sm" variant="outline" className="border-sky-200 hover:bg-sky-50">
+                View Details
+              </Button>
+            </Link>
+          </div>
         </div>
       </Card>
     </motion.div>

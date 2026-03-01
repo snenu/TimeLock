@@ -26,6 +26,7 @@ import {
 import { format, addDays, addMonths, addYears } from 'date-fns';
 import { cn } from '@/lib/utils';
 import QRCode from 'react-qr-code';
+import confetti from 'canvas-confetti';
 
 const lockTypes = [
   { value: 'message', label: 'Message', icon: Mail, description: 'Send a text message' },
@@ -88,6 +89,7 @@ export default function CreatePage() {
     if (isSuccess && address) {
       incrementTimeLockCount(address);
       setRemaining(getRemainingTimeLocks(address));
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       toast.success('TimeLock created successfully!', {
         description: 'View it in your dashboard',
         action: {

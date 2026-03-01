@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy:mainnet": "npx hardhat run scripts/deploy.cjs --network polygonMainnet",
+    "deploy:amoy": "npx hardhat run scripts/deploy.cjs --network polygonAmoy"
   },
   "dependencies": {
     "@base-org/account": "2.5.0",

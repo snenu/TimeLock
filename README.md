@@ -7,7 +7,7 @@
 **Send Messages, Files, and Crypto Into the Future**
 
 [![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js%2015-black?logo=next.js)](https://nextjs.org/)
-[![Polygon Amoy](https://img.shields.io/badge/Network-Polygon%20Amoy-8247E5?logo=polygon)](https://polygon.technology/)
+[![Polygon Mainnet](https://img.shields.io/badge/Network-Polygon%20Mainnet-8247E5?logo=polygon)](https://polygon.technology/)
 [![Powered by Pinata](https://img.shields.io/badge/Storage-Pinata%20IPFS-00B8D4)](https://pinata.cloud/)
 [![AI by Gemini](https://img.shields.io/badge/AI-Gemini%20Flash-4285F4?logo=google)](https://ai.google.dev/)
 
@@ -80,7 +80,7 @@
 
 ### Blockchain
 - **Smart Contract**: Solidity
-- **Network**: Polygon Amoy Testnet
+- **Network**: Polygon Mainnet
 - **Development**: Hardhat
 - **Wallet Integration**: WalletConnect, MetaMask
 
@@ -92,7 +92,7 @@
 
 - Node.js 18+ or Bun
 - MetaMask or compatible Web3 wallet
-- Polygon Amoy testnet tokens (get from [faucet](https://faucet.polygon.technology/))
+- POL on Polygon mainnet (buy from [exchanges](https://www.coinbase.com/price/polygon-ecosystem-token))
 
 ### 1. Clone Repository
 
@@ -111,19 +111,19 @@ npm install
 
 ### 3. Environment Variables
 
-Copy `.env.example` to `.env.local` and fill in your values:
+Copy `.env.example` to `.env` and fill in your values:
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
 
 Required variables:
 
 | Variable | Description |
 |----------|-------------|
-| `NEXT_PUBLIC_CONTRACT_ADDRESS` | Deployed TimeLock contract address |
-| `NEXT_PUBLIC_CHAIN_ID` | Chain ID (e.g. `80002` for Polygon Amoy) |
-| `NEXT_PUBLIC_RPC_URL` | RPC URL for the chain |
+| `NEXT_PUBLIC_CONTRACT_ADDRESS` | Deployed TimeLock contract address (see deployment section) |
+| `NEXT_PUBLIC_CHAIN_ID` | Chain ID (`137` for Polygon Mainnet) |
+| `NEXT_PUBLIC_RPC_URL` | RPC URL (`https://polygon.drpc.org`) |
 | `NEXT_PUBLIC_WC_PROJECT_ID` | [WalletConnect](https://cloud.walletconnect.com/) project ID |
 | `PINATA_API_KEY` | [Pinata](https://pinata.cloud/) API key (server-only; uploads go via `/api/pinata/upload`) |
 | `PINATA_SECRET_KEY` | Pinata secret key (server-only) |
@@ -149,21 +149,50 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 
 ## 📝 Smart Contract Deployment
 
-### Deploy to Polygon Amoy
+### Deploy to Polygon Mainnet
 
 ```bash
-# Compile contract
-npx hardhat compile
+# Install dependencies (use --legacy-peer-deps if needed)
+npm install --legacy-peer-deps
+
+# Ensure PRIVATE_KEY and POLYGON_MAINNET_RPC are set in .env
+# Deployer wallet must have POL for gas
 
 # Deploy contract
-npx hardhat run scripts/deploy.js --network amoy
+npm run deploy:mainnet
 
-# Copy deployed contract address to .env.local
+# Copy deployed contract address to .env
 # NEXT_PUBLIC_CONTRACT_ADDRESS=0x...
 ```
 
-### Contract Address
-- **Polygon Amoy**: `0xA8006F58a9fe59e23a8768549ebfA89A9dE75908`
+### Contract Addresses
+- **Polygon Mainnet**: See [Update in Wave 6](#update-in-wave-6) below
+- **Polygon Amoy** (testnet): `npm run deploy:amoy` for testnet deployment
+
+---
+
+## Update in Wave 6
+
+### Network Migration
+- **Switched from Polygon Amoy (Testnet) to Polygon Mainnet**
+- Chain ID: 137
+- RPC: https://polygon.drpc.org
+- Explorer: https://polygonscan.com
+
+### Contract
+- **Mainnet contract address**: Run `npm run deploy:mainnet` to deploy, then copy the printed address to `NEXT_PUBLIC_CONTRACT_ADDRESS` in your `.env` file.
+
+### Improvements Made
+- **Network**: Full migration to Polygon Mainnet; all UI, config, and links updated
+- **Security**: Added `.env` and `.env.local` to `.gitignore` to prevent secret exposure
+- **Config**: `hardhat.config.js` with polygonMainnet network; `deploy.cjs` supports mainnet and testnet
+- **UI**: Landing badge "PRODUCTION READY • POLYGON MAINNET"; footer links point to polygonscan.com and Get POL
+- **Network Switcher**: Prompts users to switch to Polygon Mainnet instead of Amoy
+- **Settings**: Updated contract explorer link and Resources (Get POL, PolygonScan)
+- **Dashboard**: Added "View on Explorer" link on each TimeLock card
+- **Create**: Confetti celebration on successful TimeLock creation
+- **SEO**: Enhanced metadata with Open Graph and Twitter card for production
+- **Deployment**: `npm run deploy:mainnet` and `npm run deploy:amoy` scripts added
 
 ---
 

@@ -28,7 +28,18 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "TimeLock Contacts - Send Messages to the Future",
-  description: "Send messages, files, and crypto into the future. Time capsules, digital wills, and scheduled crypto transfers on blockchain.",
+  description: "Send messages, files, and crypto into the future. Time capsules, digital wills, and scheduled crypto transfers on Polygon mainnet.",
+  metadataBase: new URL("https://timelock-contacts.vercel.app"),
+  openGraph: {
+    title: "TimeLock Contacts - Send Messages to the Future",
+    description: "Create time capsules, digital legacies, and scheduled crypto transfers with end-to-end encryption on Polygon blockchain.",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TimeLock Contacts - Send Messages to the Future",
+    description: "Time capsules, digital wills, and scheduled crypto on Polygon mainnet.",
+  },
 };
 
 export default function RootLayout({
