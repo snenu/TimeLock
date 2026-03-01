@@ -32,6 +32,8 @@ const nextConfig: NextConfig = {
       '@metamask/sdk': stubPath,
       'porto': stubPath,
       'porto/internal': stubPath,
+      // Fix @phosphor-icons pnpm paths (used by WalletConnect) - resolve to npm node_modules
+      '../node_modules/.pnpm/@lit_reactive-element@2.0.4/node_modules/@lit/reactive-element': litPath,
     };
 
     return config;

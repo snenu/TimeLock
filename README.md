@@ -126,7 +126,7 @@ Required variables:
 | `NEXT_PUBLIC_RPC_URL` | RPC URL (`https://polygon.drpc.org`) |
 | `NEXT_PUBLIC_WC_PROJECT_ID` | [WalletConnect](https://cloud.walletconnect.com/) project ID |
 | `PINATA_API_KEY` | [Pinata](https://pinata.cloud/) API key (server-only; uploads go via `/api/pinata/upload`) |
-| `PINATA_SECRET_KEY` | Pinata secret key (server-only) |
+| `PINATA_SECRET_KEY` or `PINATA_SECRET_API_KEY` | Pinata secret key (server-only) |
 | `PINATA_JWT` | Pinata JWT (server-only; required for file uploads) |
 | `GEMINI_API_KEY` | [Google AI](https://ai.google.dev/) API key for message enhancement |
 | `MODEL_NAME` | (Optional) Gemini model, e.g. `gemini-2.0-flash-exp` |
@@ -166,7 +166,7 @@ npm run deploy:mainnet
 ```
 
 ### Contract Addresses
-- **Polygon Mainnet**: See [Update in Wave 6](#update-in-wave-6) below
+- **Polygon Mainnet**: `0x383Ac49c5379ECB0adE722C45A3b403aa512E607` ([PolygonScan](https://polygonscan.com/address/0x383Ac49c5379ECB0adE722C45A3b403aa512E607))
 - **Polygon Amoy** (testnet): `npm run deploy:amoy` for testnet deployment
 
 ---
@@ -176,11 +176,21 @@ npm run deploy:mainnet
 ### Network Migration
 - **Switched from Polygon Amoy (Testnet) to Polygon Mainnet**
 - Chain ID: 137
-- RPC: https://polygon.drpc.org
+- RPC: https://polygon-mainnet.g.alchemy.com/v2/... (or https://polygon.drpc.org)
 - Explorer: https://polygonscan.com
 
-### Contract
-- **Mainnet contract address**: Run `npm run deploy:mainnet` to deploy, then copy the printed address to `NEXT_PUBLIC_CONTRACT_ADDRESS` in your `.env` file.
+### Contract (Deployed)
+- **Mainnet contract address**: `0x383Ac49c5379ECB0adE722C45A3b403aa512E607`
+- **Explorer**: [View on PolygonScan](https://polygonscan.com/address/0x383Ac49c5379ECB0adE722C45A3b403aa512E607)
+- **Deployer**: 0x1E3c4C991F9aaADA12Ab1588cD02D545545d02FE
+- **Deployed**: 2026-03-05
+
+To redeploy: Run `npm run deploy:mainnet` (uses `deploy-standalone.mjs`), then copy the printed address to `NEXT_PUBLIC_CONTRACT_ADDRESS` in your `.env` file.
+
+### Environment Variable Aliases
+- `PINATA_SECRET_API_KEY` = `PINATA_SECRET_KEY` (both supported)
+- `NEXT_PUBLIC_POLYGON_MAINNET_RPC` = `NEXT_PUBLIC_RPC_URL` (both supported)
+- `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` = `NEXT_PUBLIC_WC_PROJECT_ID` (both supported)
 
 ### Improvements Made
 - **Network**: Full migration to Polygon Mainnet; all UI, config, and links updated
@@ -192,7 +202,9 @@ npm run deploy:mainnet
 - **Dashboard**: Added "View on Explorer" link on each TimeLock card
 - **Create**: Confetti celebration on successful TimeLock creation
 - **SEO**: Enhanced metadata with Open Graph and Twitter card for production
-- **Deployment**: `npm run deploy:mainnet` and `npm run deploy:amoy` scripts added
+- **Deployment**: `npm run deploy:mainnet` (standalone ethers script) and `npm run deploy:amoy` scripts added
+- **Build**: WalletConnect connector temporarily excluded (use MetaMask/injected); `@wagmi/core` used for injected connector to avoid pnpm path issues
+- **Deploy script**: `deploy-standalone.mjs` for mainnet when Hardhat has ESM issues
 
 ---
 

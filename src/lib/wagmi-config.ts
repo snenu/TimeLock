@@ -1,24 +1,12 @@
 import { http, createConfig, createStorage, cookieStorage } from 'wagmi';
-import { injected, walletConnect } from 'wagmi/connectors';
+import { injected } from '@wagmi/core';
 import { polygon } from 'wagmi/chains';
 
-const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '';
-
+// WalletConnect excluded: @phosphor-icons has pnpm-only paths that break npm builds.
+// MetaMask (injected) works. Use pnpm or Vercel (often uses different resolution) for full WalletConnect.
 export const config = createConfig({
   chains: [polygon],
-  connectors: [
-    injected(),
-    walletConnect({ 
-      projectId,
-      metadata: {
-        name: 'TimeLock Contacts',
-        description: 'Send messages, files & crypto into the future',
-        url: typeof window !== 'undefined' ? window.location.origin : 'https://timelock.app',
-        icons: [`${typeof window !== 'undefined' ? window.location.origin : 'https://timelock.app'}/icon.png`]
-      },
-      showQrModal: true,
-    }),
-  ],
+  connectors: [injected()],
   transports: {
     [polygon.id]: http(process.env.NEXT_PUBLIC_RPC_URL || process.env.NEXT_PUBLIC_POLYGON_MAINNET_RPC || polygon.rpcUrls.default.http[0]),
   },
