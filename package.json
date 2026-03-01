@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy:mainnet": "npx hardhat run scripts/deploy.cjs --network polygonMainnet",
+    "deploy:mainnet": "node deploy-standalone.mjs",
     "deploy:amoy": "npx hardhat run scripts/deploy.cjs --network polygonAmoy"
   },
   "dependencies": {

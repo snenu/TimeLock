@@ -17,12 +17,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  outputFileTracingRoot: path.resolve(__dirname, '../../'),
+  outputFileTracingRoot: path.resolve(__dirname),
   typescript: {
     ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: false,
   },
   webpack: (config, { isServer }) => {
     // Alias optional wagmi connector dependencies to empty stub
@@ -40,6 +37,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   turbopack: {
+    root: path.resolve(__dirname),
     rules: {
       "*.{jsx,tsx}": {
         loaders: [loaderPath]

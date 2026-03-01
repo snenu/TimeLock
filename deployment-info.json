@@ -1,7 +1,7 @@
 {
-  "address": "0x68C75Cc77bb3997bD3Fb3FeFDfD86B966aE7dE95",
-  "deployer": "0x10ac9924a78051BdD770978740C5084205cdB628",
-  "network": "polygonAmoy",
-  "chainId": 80002,
-  "timestamp": "2025-12-12T19:43:55.325Z"
+  "address": "0x383Ac49c5379ECB0adE722C45A3b403aa512E607",
+  "deployer": "0x1E3c4C991F9aaADA12Ab1588cD02D545545d02FE",
+  "network": "polygonMainnet",
+  "chainId": 137,
+  "timestamp": "2026-03-05T08:57:52.123Z"
 }
